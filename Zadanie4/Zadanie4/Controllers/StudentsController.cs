@@ -25,7 +25,10 @@ namespace Zadanie4.Controllers
         public IActionResult GetStudents(string orderBy)
         {
             List<Student> list = new List<Student>();
-            string querry = "select * from student " + orderBy;
+            if (!orderBy.Equals("desc") || !orderBy.Equals("asc"))
+                throw new FormatException("Query string built wrong");
+
+            string querry = "SELECT * FROM Student ORDER BY Student.IndexNumber " + orderBy;
             using (var connection = new SqlConnection("Data Source=db-mssql;Initial Catalog=s19234;Integrated Security=True"))
             using (var command = new SqlCommand())
             {
@@ -43,8 +46,12 @@ namespace Zadanie4.Controllers
                     st.FirstName = dataReader["FirstName"].ToString();
                     st.LastName = dataReader["LastName"].ToString();
                     st.BirthDate = dataReader["BirthDate"].ToString();
+
+                    list.Add(st);
                 }
             }
+
+            return Ok(list);
         }
 
         /// <summary>
