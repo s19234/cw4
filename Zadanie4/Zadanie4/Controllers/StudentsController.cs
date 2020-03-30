@@ -21,6 +21,12 @@ namespace Zadanie4.Controllers
             _dbService = dbService;
         }
 
+        /// <summary>
+        /// Metoda do zwracania listy studentów z bazy danych - s19234
+        /// </summary>
+        /// <param name="orderBy">string do sortowania rosnąca lub malejąco</param>
+        /// <returns></returns>
+        /// <exception cref="FormatException">Kiedy parametr orderBy jest źle sforłumowany</exception>
         [HttpGet]
         public IActionResult GetStudents(string orderBy)
         {
